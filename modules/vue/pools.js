@@ -2,13 +2,13 @@ import { checkExpressionHasData, checkFunctionHasArgs } from './shared/utils';
 import { vEvent } from "./shared/propTypes";
 
 export const eventPool = new Map();
-export const expPool = new Map();
+export const exprPool = new Map();
 
 const regExpr = /\{\{(.+?)\}\}/;
 
 export default function (vm, methods) {
-    const { $nodes, $data } = vm;
-    const allNodes = $nodes.querySelectorAll('*');
+    const { $node, $data } = vm;
+    const allNodes = $node.querySelectorAll('*');
     const { vClick } = vEvent;
     allNodes.forEach(node => {
         const vExpression = node.textContent;
@@ -16,7 +16,7 @@ export default function (vm, methods) {
         const vClickVal = node.getAttribute(`@${vClick}`);
         if (exprMatched) {
             const poolInfo = checkExpressionHasData($data, exprMatched[1].trim());
-            poolInfo && expPool.set(node, poolInfo);
+            poolInfo && exprPool.set(node, poolInfo);
         }
         if (vClickVal) {
             const fnInfo = checkFunctionHasArgs(vClickVal);
