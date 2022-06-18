@@ -1,5 +1,6 @@
 import { getFirstChildNode } from "./shared/utils";
-import reactive from './shared/reactive';
+import reactive from './reactive';
+import pools, { eventPool, expPool } from './pools';
 
 const Vue = {
     createApp,
@@ -13,7 +14,7 @@ function createApp(component) {
 
     const init = () => {
         reactive(vm, data);
-        console.log(vm);
+        pools(vm, methods);
     }
     init();
     return vm;
